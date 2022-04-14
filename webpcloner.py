@@ -1,5 +1,4 @@
 import argparse
-import logging
 import os
 import urllib.request
 from urllib.request import urlretrieve
@@ -8,7 +7,6 @@ import cssutils
 from bs4 import BeautifulSoup
 from rich import print
 from rich.console import Console
-from rich.logging import RichHandler
 
 # create take url input from command line
 parser = argparse.ArgumentParser(description="Clone a website or page")
@@ -26,11 +24,7 @@ baseurl = args.url
 
 
 console = Console()
-# create a logger
-FORMAT = "%(message)s"
-logging.basicConfig(
-    level="NOTSET", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
-)
+
 
 print("[bold green]Script to clone webpage[/bold green]")
 
@@ -81,8 +75,7 @@ with console.status(status="Cloning Webpage") as status:
                     os.makedirs(os.path.dirname(directory))
                 testfile, headers = urlretrieve(baseurl + directory, directory)
             except Exception:
-
-                console.print_exception()
+                pass
         console.print("[bold green] Downloaded all the images")
 
         # cloning all css files
@@ -124,15 +117,15 @@ with console.status(status="Cloning Webpage") as status:
                                     link = "assets/" + link[3:]
                             console.print(f"Downloading CSS-Image {str(link)}")
                             if "/" not in link:
-                                console.print(f"\t\tNo directory. Saving file {link}")
+                                console.print(f"No directory Found {link}")
                             elif not os.path.exists(os.path.dirname(link)):
                                 console.print("[bold green] Creating directory")
                                 os.makedirs(os.path.dirname(link))
                             testfile, headers = urlretrieve(baseurl + link, link)
                         except Exception:
-                            console.print_exception()
+                            pass
             except Exception:
-                console.print_exception()
+                pass
         console.print("[bold green] Downloaded and Created All the CSS files")
         console.print("[bold green] Downloading all the  JS files")
 
@@ -155,9 +148,9 @@ with console.status(status="Cloning Webpage") as status:
                     os.makedirs(os.path.dirname(directory))
                 testfile, headers = urlretrieve(baseurl + directory, directory)
             except Exception:
-                console.print_exception()
+                pass
 
         console.print("[bold green] Downloaded all the JS files")
-        console.print("[bold yellow] Cloned page and save in root directory")
+        console.print("[bold yellow] Cloned page and saved in root directory")
     except Exception:
-        console.print_exception()
+        pass
