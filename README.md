@@ -32,3 +32,6 @@ Run the Script
   # or pass --help for help menu
 ```
 
+https://user-images.githubusercontent.com/73944456/163382323-3c432e0e-db73-47d3-979e-2b46f7d33675.mp4
+
+
